@@ -4,6 +4,7 @@ interface ArgsBase {
   repo?: string;
   sha?: string;
   token: string;
+  ciFuzzToken: string;
   conclusion?: Conclusion;
   status: Status;
 

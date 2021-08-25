@@ -71,20 +71,3 @@ export const createRun = async (
   });
   return data.id;
 };
-
-export const updateRun = async (
-  octokit: InstanceType<typeof GitHub>,
-  id: number,
-  ownership: Ownership,
-  inputs: Inputs.Args,
-): Promise<void> => {
-  const previous = await octokit.checks.get({
-    ...ownership,
-    check_run_id: id,
-  });
-  await octokit.checks.update({
-    ...ownership,
-    check_run_id: id,
-    ...unpackInputs(previous.data.name, inputs),
-  });
-};

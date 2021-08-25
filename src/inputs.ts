@@ -1,6 +1,5 @@
 import {InputOptions} from '@actions/core';
 import * as Inputs from './namespaces/Inputs';
-import fs from 'fs';
 
 type GetInput = (name: string, options?: InputOptions | undefined) => string;
 
@@ -17,10 +16,11 @@ const parseJSON = <T>(getInput: GetInput, property: string): T | undefined => {
   }
 };
 
-export const parseInputs = (getInput: GetInput): Inputs.Args => {
+export const parseInputs = (getInput: GetInput): Inputs.ArgsCreate => {
   const repo = getInput('repo');
   const sha = getInput('sha');
-  const token = getInput('token', {required: true});
+  const token = getInput('github-token', {required: true});
+  const ciFuzzToken = getInput('ci-fuzz-api-token', {required: true});
   const output_text_description_file = getInput('output_text_description_file');
 
   const name = getInput('name');
@@ -76,10 +76,6 @@ export const parseInputs = (getInput: GetInput): Inputs.Args => {
     throw new Error(`missing value for 'action_url'`);
   }
 
-  if (output && output_text_description_file) {
-    output.text_description = fs.readFileSync(output_text_description_file, 'utf8');
-  }
-
   if ((!output || !output.summary) && (annotations || images)) {
     throw new Error(`missing value for 'output.summary'`);
   }
@@ -89,10 +85,9 @@ export const parseInputs = (getInput: GetInput): Inputs.Args => {
     sha,
     name,
     token,
+    ciFuzzToken,
     status,
     conclusion,
-
-    checkID,
 
     actionURL,
     detailsURL,

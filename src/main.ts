@@ -3,7 +3,7 @@ import * as github from '@actions/github';
 import * as Inputs from './namespaces/Inputs';
 import * as GitHub from './namespaces/GitHub';
 import {parseInputs} from './inputs';
-import {createRun, updateRun} from './checks';
+import {createRun} from './checks';
 
 const isCreation = (inputs: Inputs.Args): inputs is Inputs.ArgsCreate => {
   return !!(inputs as Inputs.ArgsCreate).name;
@@ -50,15 +50,10 @@ async function run(): Promise<void> {
       ownership.repo = repo[1];
     }
 
-    if (isCreation(inputs)) {
-      core.debug(`Creating a new Run on ${ownership.owner}/${ownership.repo}@${sha}`);
-      const id = await createRun(octokit, inputs.name, sha, ownership, inputs);
-      core.setOutput('check_id', id);
-    } else {
-      const id = inputs.checkID;
-      core.debug(`Updating a Run on ${ownership.owner}/${ownership.repo}@${sha} (${id})`);
-      await updateRun(octokit, id, ownership, inputs);
-    }
+    core.debug(`Creating a new Run on ${ownership.owner}/${ownership.repo}@${sha}`);
+    const id = await createRun(octokit, inputs.name, sha, ownership, inputs);
+    core.setOutput('check_id', id);
+
     core.debug(`Done`);
   } catch (e) {
     const error = e as Error;
