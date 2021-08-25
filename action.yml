@@ -17,6 +17,10 @@ inputs:
   name: # id of input
     description: 'name of the check'
     required: true
+  status:
+    description: 'the status of your check'
+    required: false
+    default: completed
 outputs:
   time: # id of output
     description: 'The time we greeted you'
