@@ -14,6 +14,9 @@ inputs:
   repo: # id of input
     description: 'repository to run Fuzz test'
     required: true
+  name: # id of input
+    description: 'name of the check'
+    required: true
 outputs:
   time: # id of output
     description: 'The time we greeted you'
