@@ -1,13 +1,14 @@
 import {GitHub} from '@actions/github/lib/utils';
 import * as core from '@actions/core';
 import * as Inputs from './namespaces/Inputs';
+import {Findings} from './namespaces/findings';
 
 type Ownership = {
   owner: string;
   repo: string;
 };
 
-const unpackInputs = (title: string, inputs: Inputs.Args, findings: string): Record<string, unknown> => {
+const unpackInputs = (title: string, inputs: Inputs.Args, findings: Findings): Record<string, unknown> => {
   let output;
   if (inputs.output) {
     output = {
@@ -16,7 +17,7 @@ const unpackInputs = (title: string, inputs: Inputs.Args, findings: string): Rec
       text: inputs.output.text_description,
       actions: inputs.actions,
       // annotations: inputs.annotations,
-      annotations: [{"path":"README.md","annotation_level":"warning","title":"Spell Checker","message":"Check your spelling for XXX .","raw_details":findings,"start_line":1,"end_line":2}],
+      annotations: [{"path":"README.md","annotation_level":"warning","title":"Spell Checker","message":"Check your spelling for XXX .","raw_details":findings.findings.length,"start_line":1,"end_line":2}],
       images: inputs.images,
     };
   }
@@ -62,7 +63,7 @@ export const createRun = async (
   sha: string,
   ownership: Ownership,
   inputs: Inputs.Args,
-  findings: string
+  findings: Findings
 ): Promise<number> => {
   const {data} = await octokit.checks.create({
     ...ownership,

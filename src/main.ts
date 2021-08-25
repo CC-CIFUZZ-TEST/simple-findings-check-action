@@ -5,6 +5,7 @@ import * as GitHub from './namespaces/GitHub';
 import {parseInputs} from './inputs';
 import {createRun} from './checks';
 import fetch from 'node-fetch'
+import {Findings} from './namespaces/findings';
 
 
 const isCreation = (inputs: Inputs.Args): inputs is Inputs.ArgsCreate => {
@@ -58,10 +59,11 @@ async function run(): Promise<void> {
         'Authorization': 'Bearer ' + inputs.ciFuzzToken
       }
     })
-    const json = await response.json()
+    const json = await response.json();
+    let findings : Findings = JSON.parse(json);
 
     core.debug(`Creating a new Run on ${ownership.owner}/${ownership.repo}@${sha}`);
-    const id = await createRun(octokit, inputs.name, sha, ownership, inputs, json);
+    const id = await createRun(octokit, inputs.name, sha, ownership, inputs, findings);
     core.setOutput('check_id', id);
 
 
