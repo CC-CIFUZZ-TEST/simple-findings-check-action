@@ -50,7 +50,7 @@ async function run(): Promise<void> {
       ownership.repo = repo[1];
     }
 
-    const response = await window.fetch('https://external.code-intelligence.com/v1/projects/organizations_b30cbf9fc564b330_lighttpd-223f0fe0/findings', {
+    const response = await fetch('https://external.code-intelligence.com/v1/projects/organizations_b30cbf9fc564b330_lighttpd-223f0fe0/findings', {
       method: 'get',
       headers: {
         'Authorization': 'Bearer ' + inputs.ciFuzzToken
