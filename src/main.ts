@@ -50,9 +50,18 @@ async function run(): Promise<void> {
       ownership.repo = repo[1];
     }
 
+    const response = await window.fetch('https://external.code-intelligence.com/v1/projects/organizations_b30cbf9fc564b330_lighttpd-223f0fe0/findings', {
+      method: 'get',
+      headers: {
+        'Authorization': 'Bearer ' + inputs.ciFuzzToken
+      }
+    })
+    const json = await response.json()
+
     core.debug(`Creating a new Run on ${ownership.owner}/${ownership.repo}@${sha}`);
-    const id = await createRun(octokit, inputs.name, sha, ownership, inputs);
+    const id = await createRun(octokit, inputs.name, sha, ownership, inputs, json);
     core.setOutput('check_id', id);
+
 
     core.debug(`Done`);
   } catch (e) {

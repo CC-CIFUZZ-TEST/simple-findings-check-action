@@ -7,7 +7,7 @@ type Ownership = {
   repo: string;
 };
 
-const unpackInputs = (title: string, inputs: Inputs.Args): Record<string, unknown> => {
+const unpackInputs = (title: string, inputs: Inputs.Args, findings: string): Record<string, unknown> => {
   let output;
   if (inputs.output) {
     output = {
@@ -16,7 +16,7 @@ const unpackInputs = (title: string, inputs: Inputs.Args): Record<string, unknow
       text: inputs.output.text_description,
       actions: inputs.actions,
       // annotations: inputs.annotations,
-      annotations: [{"path":"README.md","annotation_level":"warning","title":"Spell Checker","message":"Check your spelling for XXX .","raw_details":"Do you mean ‘bananas’ or ‘banana’?","start_line":1,"end_line":2}],
+      annotations: [{"path":"README.md","annotation_level":"warning","title":"Spell Checker","message":"Check your spelling for XXX .","raw_details":findings,"start_line":1,"end_line":2}],
       images: inputs.images,
     };
   }
@@ -62,13 +62,14 @@ export const createRun = async (
   sha: string,
   ownership: Ownership,
   inputs: Inputs.Args,
+  findings: string
 ): Promise<number> => {
   const {data} = await octokit.checks.create({
     ...ownership,
     head_sha: sha,
     name: name,
     started_at: formatDate(),
-    ...unpackInputs(name, inputs),
+    ...unpackInputs(name, inputs, findings),
   });
   return data.id;
 };
