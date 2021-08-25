@@ -15,7 +15,8 @@ const unpackInputs = (title: string, inputs: Inputs.Args): Record<string, unknow
       summary: inputs.output.summary,
       text: inputs.output.text_description,
       actions: inputs.actions,
-      annotations: inputs.annotations,
+      // annotations: inputs.annotations,
+      annotations: '[{“path”:“README.md”,“annotation_level”:“warning”,“title”:“Spell Checker”,“message”:“Check your spelling for ‘banaas’.“,”raw_details”:“Do you mean ‘bananas’ or ‘banana’?“,”start_line”:1,“end_line”:2}]',
       images: inputs.images,
     };
   }
