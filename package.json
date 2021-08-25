@@ -27,6 +27,7 @@
     "@actions/core": "^1.2.6",
     "@actions/github": "^4.0.0",
     "@octokit/rest": "^18.0.5",
+    "@types/node-fetch": "^2.5.12",
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
