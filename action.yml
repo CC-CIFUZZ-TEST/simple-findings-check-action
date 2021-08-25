@@ -5,6 +5,15 @@ inputs:
     description: 'Who to greet'
     required: true
     default: 'World'
+  ci-fuzz-api-token: # id of input
+    description: 'CI Fuzz Access Token'
+    required: true
+  github-token: # id of input
+    description: 'Github Access Token'
+    required: true
+  repo: # id of input
+    description: 'repository to run Fuzz test'
+    required: true
 outputs:
   time: # id of output
     description: 'The time we greeted you'
