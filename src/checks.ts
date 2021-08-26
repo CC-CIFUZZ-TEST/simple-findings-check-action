@@ -53,7 +53,7 @@ function getFindingsStringArray(findings: Findings): CheckAnnotation[] {
 
 function getFindingsString(finding: Finding): CheckAnnotation {
     return {
-        path: "README", // finding.error_report.debugging_info.executable_path,
+        path: ".github/workflows/check.yml", // finding.error_report.debugging_info.executable_path,
         annotation_level: "failure",
         title: finding.error_report.more_details.name,
         message: finding.error_report.more_details.description,
