@@ -29,7 +29,7 @@ const unpackInputs = (title: string, inputs: Inputs.Args): Record<string, unknow
             "start_line":86,
             "end_line":86},
         {"path":"webgoat-container/src/main/java/org/owasp/webgoat/users/UserValidator.java",
-          "annotation_level":"error",
+          "annotation_level":"failure",
           "title":"org.owasp.webgoat.all_controllers",
           "message":"{\"requests\":[{\"method\":\"POST\",\"uri\":\"/register.mvc\",\"contentType\":\"APPLICATION_JSON\",\"body\":\"{}\",\"webControllerId\":\"382221417\"}]}",
           "raw_details": "An Exception policy violation occurs when an exception is thrown during the fuzzing process that \n" +
@@ -38,7 +38,6 @@ const unpackInputs = (title: string, inputs: Inputs.Args): Record<string, unknow
               "about the exception can be found in the log below.",
           "start_line":31,
           "end_line":31}
-
       ],
       images: inputs.images,
     };
