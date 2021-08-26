@@ -9,12 +9,12 @@ type Ownership = {
   repo: string;
 };
 
-const unpackInputs = (title: string, inputs: Args, findings: string): Record<string, unknown> => {
+const unpackInputs = (title: string, inputs: Args, findings: Findings): Record<string, unknown> => {
   let output;
   if (inputs.output) {
     output = {
       title,
-      summary: findings+" Findings found",
+      summary: findings.findings.length+" Findings found",
       text: inputs.output.text_description,
       actions: inputs.actions,
       // annotations: inputs.annotations,
@@ -85,7 +85,7 @@ export const createRun = async (
     sha: string,
     ownership: Ownership,
     inputs: Args,
-    findings: string): Promise<number> => {
+    findings: Findings): Promise<number> => {
   const {data} = await octokit.checks.create({
     ...ownership,
     head_sha: sha,
