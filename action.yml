@@ -1,10 +1,6 @@
 name: 'Hello World'
 description: 'Greet someone and record the time'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
-    required: true
-    default: 'World'
   ci-fuzz-api-token: # id of input
     description: 'CI Fuzz Access Token'
     required: true
@@ -17,13 +13,6 @@ inputs:
   name: # id of input
     description: 'name of the check'
     required: true
-  status:
-    description: 'the status of your check'
-    required: false
-    default: completed
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
 runs:
   using: 'node12'
   main: 'dist/index.js'

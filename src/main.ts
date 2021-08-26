@@ -8,10 +8,6 @@ import fetch from 'node-fetch'
 import {Findings} from './namespaces/findings';
 
 
-const isCreation = (inputs: Inputs.Args): inputs is Inputs.ArgsCreate => {
-  return !!(inputs as Inputs.ArgsCreate).name;
-};
-
 // prettier-ignore
 const prEvents = [
   'pull_request',
@@ -19,16 +15,13 @@ const prEvents = [
   'pull_request_review_comment',
 ];
 
-const getSHA = (inputSHA: string | undefined): string => {
+const getSHA = (): string => {
   let sha = github.context.sha;
   if (prEvents.includes(github.context.eventName)) {
     const pull = github.context.payload.pull_request as GitHub.PullRequest;
     if (pull?.head.sha) {
       sha = pull?.head.sha;
     }
-  }
-  if (inputSHA) {
-    sha = inputSHA;
   }
   return sha;
 };
@@ -45,7 +38,7 @@ async function run(): Promise<void> {
       owner: github.context.repo.owner,
       repo: github.context.repo.repo,
     };
-    const sha = getSHA(inputs.sha);
+    const sha = getSHA();
 
     if (inputs.repo) {
       const repo = inputs.repo.split('/');
@@ -60,14 +53,12 @@ async function run(): Promise<void> {
        }
      })
 
-     //const json = await response.json();
      const text = await response.text();
      let findings : Findings = JSON.parse(text)
 
     core.debug(`Creating a new Run on ${ownership.owner}/${ownership.repo}@${sha}`);
     const id = await createRun(octokit, inputs.name, sha, ownership, inputs,findings);
     core.setOutput('check_id', id);
-
 
     core.debug(`Done`);
   } catch (e) {
