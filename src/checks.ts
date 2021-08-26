@@ -11,10 +11,10 @@ type Ownership = {
 
 function getFindingsString(finding: Finding):string {
   return `{"path":${finding.error_report.debugging_info.executable_path},
-    "annotation_level":${finding.error_report.more_details.severity.description},
+    "annotation_level": "failure"},
     "title":${finding.error_report.more_details.name} : ${finding.error_report.debugging_info},
     "message":${finding.error_report.more_details.description},
-    "raw_details":${finding.error_report.input_data},
+    "raw_details": "Test",
     "start_line":${finding.error_report.debugging_info.break_points[0].location.line},
     "end_line":${finding.error_report.debugging_info.break_points[0].location.line}}`;
 }
