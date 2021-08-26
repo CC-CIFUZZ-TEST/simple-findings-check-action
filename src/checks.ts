@@ -1,13 +1,31 @@
 import {GitHub} from '@actions/github/lib/utils';
 import * as core from '@actions/core';
 import * as Inputs from './namespaces/Inputs';
-import {Findings} from './namespaces/findings';
+import {Finding, Findings} from './namespaces/findings';
 import {Args} from "./namespaces/Inputs";
 
 type Ownership = {
   owner: string;
   repo: string;
 };
+
+function getFindingsString(finding: Finding):string {
+  return `{"path":${finding.error_report.debugging_info.executable_path},
+    "annotation_level":${finding.error_report.more_details.severity.description},
+    "title":${finding.error_report.more_details.name} : ${finding.error_report.debugging_info},
+    "message":${finding.error_report.more_details.description},
+    "raw_details":${finding.error_report.input_data},
+    "start_line":${finding.error_report.debugging_info.break_points[0].location.line},
+    "end_line":${finding.error_report.debugging_info.break_points[0].location.line}}`;
+}
+
+function getFindingsStringArray(findings: Findings):string[] {
+  let findingsArray:string[] = []
+  findings.findings.forEach(finding=> {
+      findingsArray.push(getFindingsString(finding))
+  })
+  return findingsArray
+}
 
 const unpackInputs = (title: string, inputs: Args, findings: Findings): Record<string, unknown> => {
   let output;
@@ -17,12 +35,12 @@ const unpackInputs = (title: string, inputs: Args, findings: Findings): Record<s
       summary: findings.findings.length+" Findings found",
       text: inputs.output.text_description,
       actions: inputs.actions,
-      // annotations: inputs.annotations,
-      annotations: [
+      annotations: getFindingsStringArray(findings),
+          /*[
           {"path":"webgoat-container/src/main/java/org/owasp/webgoat/controller/StartLesson.java",
             "annotation_level":"warning",
             "title":"Exception Policy Violation : org.owasp.webgoat.all_controllers",
-            "message":"{\"requests\":[{\"method\":\"GET\",\"uri\":\"/*.lesson\",\"webControllerId\":\"1415976645\"}]}",
+            "message":"{\"requests\":[{\"method\":\"GET\",\"uri\":\"/!*.lesson\",\"webControllerId\":\"1415976645\"}]}",
             "raw_details":"An Exception policy violation occurs when an exception is thrown during the fuzzing process that \n" +
                 "was not expected. Expected exceptions are defined by the Fuzzing Policy provided by the user. The Fuzzing Policy \n" +
                 "contains a list of matchers for allowed exceptions during the fuzzing process, and this exception did not match any. Details \n" +
@@ -40,6 +58,7 @@ const unpackInputs = (title: string, inputs: Args, findings: Findings): Record<s
           "start_line":31,
           "end_line":31}
       ],
+          */
       images: inputs.images,
     };
   }
