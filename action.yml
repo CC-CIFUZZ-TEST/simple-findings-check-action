@@ -1,16 +1,16 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'List findings'
+description: 'List the found findings of a fuzzing run'
 inputs:
-  ci-fuzz-api-token: # id of input
+  ci-fuzz-api-token:
     description: 'CI Fuzz Access Token'
     required: true
-  github-token: # id of input
+  github-token:
     description: 'Github Access Token'
     required: true
-  repo: # id of input
-    description: 'repository to run Fuzz test'
+  repo:
+    description: 'repository'
     required: true
-  name: # id of input
+  name:
     description: 'name of the check'
     required: true
 runs:

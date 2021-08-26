@@ -1,12 +1,10 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
-import * as Inputs from './namespaces/Inputs';
 import * as GitHub from './namespaces/GitHub';
 import {parseInputs} from './inputs';
 import {createRun} from './checks';
 import fetch from 'node-fetch'
 import {Findings} from './namespaces/findings';
-
 
 // prettier-ignore
 const prEvents = [
