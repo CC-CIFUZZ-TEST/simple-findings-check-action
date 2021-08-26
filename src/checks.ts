@@ -28,14 +28,12 @@ export const createRun = async (
 
 const unpackInputs = (title: string, inputs: Args, findings: Findings): Record<string, unknown> => {
     return {
-        status: "",
         output: {
             title,
             summary: findings.findings.length + " Findings found",
             text: "",
             annotations: getFindingsStringArray(findings),
         },
-        conclusion: "",
         completed_at: formatDate(),
     };
 };
