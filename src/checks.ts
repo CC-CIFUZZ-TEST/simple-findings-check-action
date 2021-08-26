@@ -8,13 +8,13 @@ type Ownership = {
     repo: string;
 };
 
-export const createRun = async (
-    octokit: InstanceType<typeof GitHub>,
-    name: string,
-    sha: string,
-    ownership: Ownership,
-    inputs: Args,
-    findings: Findings): Promise<number> => {
+export async function createRun(octokit: InstanceType<typeof GitHub>,
+                         name: string,
+                         sha: string,
+                         ownership: Ownership,
+                         inputs: Args,
+                         findings: Findings): Promise<number> {
+
     const {data} = await octokit.checks.create({
         ...ownership,
         head_sha: sha,
@@ -23,10 +23,9 @@ export const createRun = async (
         ...unpackInputs(name, inputs, findings),
     });
     return data.id;
-};
+}
 
-
-const unpackInputs = (title: string, inputs: Args, findings: Findings): Record<string, unknown> => {
+function unpackInputs(title: string, inputs: Args, findings: Findings): Record<string, unknown> {
     return {
         output: {
             title,
@@ -37,11 +36,11 @@ const unpackInputs = (title: string, inputs: Args, findings: Findings): Record<s
         conclusion: findings.findings.length == 0 ? "success" : "failure",
         completed_at: formatDate(),
     };
-};
+}
 
-const formatDate = (): string => {
+function formatDate(): string {
     return new Date().toISOString();
-};
+}
 
 function getFindingsStringArray(findings: Findings): CheckAnnotation[] {
     let findingsArray: CheckAnnotation[] = []

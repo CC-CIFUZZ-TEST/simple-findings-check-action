@@ -14,7 +14,7 @@ const prEvents = [
     'pull_request_review_comment',
 ];
 
-const getSHA = (): string => {
+function getSHA(): string {
     let sha = github.context.sha;
     if (prEvents.includes(github.context.eventName)) {
         const pull = github.context.payload.pull_request as GitHub.PullRequest;
@@ -23,7 +23,7 @@ const getSHA = (): string => {
         }
     }
     return sha;
-};
+}
 
 async function run(): Promise<void> {
     try {
@@ -70,7 +70,7 @@ async function run(): Promise<void> {
 
 type GetInput = (name: string, options?: InputOptions | undefined) => string;
 
-const parseInputs = (getInput: GetInput): Inputs.Args => {
+function parseInputs(getInput: GetInput): Inputs.Args {
     const repo = getInput('repo');
     const token = getInput('github-token', {required: true});
     const ciFuzzToken = getInput('ci-fuzz-api-token', {required: true});
