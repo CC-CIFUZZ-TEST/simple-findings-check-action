@@ -2,18 +2,19 @@ import {GitHub} from '@actions/github/lib/utils';
 import * as core from '@actions/core';
 import * as Inputs from './namespaces/Inputs';
 import {Findings} from './namespaces/findings';
+import {Args} from "./namespaces/Inputs";
 
 type Ownership = {
   owner: string;
   repo: string;
 };
 
-const unpackInputs = (title: string, inputs: Inputs.Args): Record<string, unknown> => {
+const unpackInputs = (title: string, inputs: Args, findings: Findings): Record<string, unknown> => {
   let output;
   if (inputs.output) {
     output = {
       title,
-      summary: "2 Findings found",
+      summary: findings.findings.length+" Findings found",
       text: inputs.output.text_description,
       actions: inputs.actions,
       // annotations: inputs.annotations,
@@ -79,18 +80,18 @@ const formatDate = (): string => {
 };
 
 export const createRun = async (
-  octokit: InstanceType<typeof GitHub>,
-  name: string,
-  sha: string,
-  ownership: Ownership,
-  inputs: Inputs.Args,
-): Promise<number> => {
+    octokit: InstanceType<typeof GitHub>,
+    name: string,
+    sha: string,
+    ownership: Ownership,
+    inputs: Args,
+    findings: Findings): Promise<number> => {
   const {data} = await octokit.checks.create({
     ...ownership,
     head_sha: sha,
     name: name,
     started_at: formatDate(),
-    ...unpackInputs(name, inputs),
+    ...unpackInputs(name, inputs,findings),
   });
   return data.id;
 };
