@@ -13,7 +13,7 @@ type Ownership = {
 function getFindingsString(finding: Finding):CheckAnnotation {
   return {
     path:finding.error_report.debugging_info.executable_path,
-    annotation_level: finding.error_report.type,
+    annotation_level: "failure",
     title: finding.error_report.more_details.name,
     message:finding.error_report.more_details.description,
     raw_details: "Test",
