@@ -14,7 +14,7 @@ const unpackInputs = (title: string, inputs: Args, findings: Findings): Record<s
   if (inputs.output) {
     output = {
       title,
-      summary: findings.findings.length+" Findings found",
+      summary: findings+" Findings found",
       text: inputs.output.text_description,
       actions: inputs.actions,
       // annotations: inputs.annotations,

@@ -59,6 +59,10 @@ async function run(): Promise<void> {
          'Authorization': 'Bearer ' + inputs.ciFuzzToken
        }
      })
+         /*.then( response => {
+       return response.json();
+     } ).then( json => {
+       let hal : Findings = Object.assign( new Findings(), json );*/
 
      //const json = await response.json();
      const text = await response.text();
