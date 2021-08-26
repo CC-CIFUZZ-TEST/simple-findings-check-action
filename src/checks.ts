@@ -13,7 +13,7 @@ const unpackInputs = (title: string, inputs: Inputs.Args): Record<string, unknow
   if (inputs.output) {
     output = {
       title,
-      summary: inputs.output.summary,
+      summary: "2 Findings found",
       text: inputs.output.text_description,
       actions: inputs.actions,
       // annotations: inputs.annotations,
@@ -21,13 +21,23 @@ const unpackInputs = (title: string, inputs: Inputs.Args): Record<string, unknow
           {"path":"webgoat-container/src/main/java/org/owasp/webgoat/controller/StartLesson.java",
             "annotation_level":"warning",
             "title":"org.owasp.webgoat.all_controllers",
-            "message":"{\"requests\":[{\"method\":\"GET\",\"uri\":\"/*.lesson\",\"webControllerId\":\"1415976645\"}]",
+            "message":"{\"requests\":[{\"method\":\"GET\",\"uri\":\"/*.lesson\",\"webControllerId\":\"1415976645\"}]}",
             "raw_details":"An Exception policy violation occurs when an exception is thrown during the fuzzing process that \n" +
                 "was not expected. Expected exceptions are defined by the Fuzzing Policy provided by the user. The Fuzzing Policy \n" +
                 "contains a list of matchers for allowed exceptions during the fuzzing process, and this exception did not match any. Details \n" +
                 "about the exception can be found in the log below.",
             "start_line":86,
-            "end_line":86}
+            "end_line":86},
+        {"path":"webgoat-container/src/main/java/org/owasp/webgoat/users/UserValidator.java",
+          "annotation_level":"error",
+          "title":"org.owasp.webgoat.all_controllers",
+          "message":"{\"requests\":[{\"method\":\"POST\",\"uri\":\"/register.mvc\",\"contentType\":\"APPLICATION_JSON\",\"body\":\"{}\",\"webControllerId\":\"382221417\"}]}",
+          "raw_details": "An Exception policy violation occurs when an exception is thrown during the fuzzing process that \n" +
+              "was not expected. Expected exceptions are defined by the Fuzzing Policy provided by the user. The Fuzzing Policy \n" +
+              "contains a list of matchers for allowed exceptions during the fuzzing process, and this exception did not match any. Details \n" +
+              "about the exception can be found in the log below.",
+          "start_line":31,
+          "end_line":31}
 
       ],
       images: inputs.images,
