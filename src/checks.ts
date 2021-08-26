@@ -53,12 +53,12 @@ function getFindingsStringArray(findings: Findings): CheckAnnotation[] {
 
 function getFindingsString(finding: Finding): CheckAnnotation {
     return {
-        path: finding.error_report.debugging_info.executable_path,
+        path: "README", // finding.error_report.debugging_info.executable_path,
         annotation_level: "failure",
         title: finding.error_report.more_details.name,
         message: finding.error_report.more_details.description,
         raw_details: finding.error_report.input_data ? "Crashing input: " + finding.error_report.input_data : "No crashing input available",
-        start_line: finding.error_report.debugging_info.break_points[0].location.line,
-        end_line: finding.error_report.debugging_info.break_points[0].location.line
+        start_line: 1, // finding.error_report.debugging_info.break_points[0].location.line,
+        end_line: 1, // finding.error_report.debugging_info.break_points[0].location.line
     };
 }
