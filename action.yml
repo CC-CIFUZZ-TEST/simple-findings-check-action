@@ -13,6 +13,9 @@ inputs:
   name:
     description: 'name of the check'
     required: true
+  test_collection_run:
+    description: 'something'
+    required: true
 runs:
   using: 'node12'
   main: 'dist/index.js'
