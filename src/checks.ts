@@ -30,7 +30,7 @@ function unpackInputs(title: string, inputs: Args, findings: Findings): Record<s
         output: {
             title,
             summary: findings.findings.length + " Findings found",
-            text: "",
+            text: inputs.testCollectionRun,
             annotations: getFindingsStringArray(findings),
         },
         conclusion: findings.findings.length == 0 ? "success" : "failure",

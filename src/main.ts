@@ -74,6 +74,7 @@ function parseInputs(getInput: GetInput): Inputs.Args {
     const repo = getInput('repo');
     const token = getInput('github-token', {required: true});
     const ciFuzzToken = getInput('ci-fuzz-api-token', {required: true});
+    const testCollectionRun = getInput('test_collection_run', {required: true});
 
     const name = getInput('name');
 
@@ -87,6 +88,7 @@ function parseInputs(getInput: GetInput): Inputs.Args {
         name,
         token,
         ciFuzzToken,
+        testCollectionRun
     };
 }
 

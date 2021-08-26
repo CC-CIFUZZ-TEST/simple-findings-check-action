@@ -3,4 +3,5 @@ export interface Args {
     token: string;
     ciFuzzToken: string;
     name: string;
+    testCollectionRun: string
 }
