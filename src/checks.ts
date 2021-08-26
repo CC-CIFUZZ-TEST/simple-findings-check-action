@@ -20,7 +20,7 @@ const unpackInputs = (title: string, inputs: Inputs.Args): Record<string, unknow
       annotations: [
           {"path":"webgoat-container/src/main/java/org/owasp/webgoat/controller/StartLesson.java",
             "annotation_level":"warning",
-            "title":"org.owasp.webgoat.all_controllers",
+            "title":"Exception Policy Violation : org.owasp.webgoat.all_controllers",
             "message":"{\"requests\":[{\"method\":\"GET\",\"uri\":\"/*.lesson\",\"webControllerId\":\"1415976645\"}]}",
             "raw_details":"An Exception policy violation occurs when an exception is thrown during the fuzzing process that \n" +
                 "was not expected. Expected exceptions are defined by the Fuzzing Policy provided by the user. The Fuzzing Policy \n" +
@@ -30,7 +30,7 @@ const unpackInputs = (title: string, inputs: Inputs.Args): Record<string, unknow
             "end_line":86},
         {"path":"webgoat-container/src/main/java/org/owasp/webgoat/users/UserValidator.java",
           "annotation_level":"failure",
-          "title":"org.owasp.webgoat.all_controllers",
+          "title":"Exception Policy Violation : org.owasp.webgoat.all_controllers",
           "message":"{\"requests\":[{\"method\":\"POST\",\"uri\":\"/register.mvc\",\"contentType\":\"APPLICATION_JSON\",\"body\":\"{}\",\"webControllerId\":\"382221417\"}]}",
           "raw_details": "An Exception policy violation occurs when an exception is thrown during the fuzzing process that \n" +
               "was not expected. Expected exceptions are defined by the Fuzzing Policy provided by the user. The Fuzzing Policy \n" +
