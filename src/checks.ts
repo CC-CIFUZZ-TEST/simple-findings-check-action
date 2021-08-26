@@ -36,7 +36,6 @@ const unpackInputs = (title: string, inputs: Args, findings: Findings): Record<s
         },
         conclusion: "failure",
         completed_at: formatDate(),
-        details_url:"",
     };
 };
 
