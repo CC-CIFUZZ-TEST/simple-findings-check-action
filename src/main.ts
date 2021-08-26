@@ -69,7 +69,7 @@ async function run(): Promise<void> {
      let findings : Findings = JSON.parse(text)
 
     core.debug(`Creating a new Run on ${ownership.owner}/${ownership.repo}@${sha}`);
-    const id = await createRun(octokit, inputs.name, sha, ownership, inputs,findings);
+    const id = await createRun(octokit, inputs.name, sha, ownership, inputs,text);
     core.setOutput('check_id', id);
 
 
