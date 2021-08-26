@@ -12,20 +12,13 @@ type Ownership = {
 
 function getFindingsString(finding: Finding):CheckAnnotation {
   return {
-    path:"PFAD",
-    annotation_level: "failure",
-    title: "TITLE",
-    message:"MESS",
-    raw_details: "DET",
-    start_line:5,
-    end_line:5};
-  /*{path:finding.error_report.debugging_info.executable_path
-      annotation_level: "failure",
+    path:finding.error_report.debugging_info.executable_path,
+    annotation_level: finding.error_report.type,
     title: finding.error_report.more_details.name,
     message:finding.error_report.more_details.description,
     raw_details: "Test",
-    start_line:finding.error_report.debugging_info.break_points[0].location.line,
-    end_line:finding.error_report.debugging_info.break_points[0].location.line}*/
+    start_line:5,
+    end_line:5};
 }
 
 function getFindingsStringArray(findings: Findings):CheckAnnotation[] {
