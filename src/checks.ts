@@ -3,24 +3,33 @@ import * as core from '@actions/core';
 import * as Inputs from './namespaces/Inputs';
 import {Finding, Findings} from './namespaces/findings';
 import {Args} from "./namespaces/Inputs";
+import {CheckAnnotation} from "./namespaces/CheckAnnotation";
 
 type Ownership = {
   owner: string;
   repo: string;
 };
 
-function getFindingsString(finding: Finding):string {
-  return `{"path":${finding.error_report.debugging_info.executable_path},
-    "annotation_level": "failure"},
-    "title":${finding.error_report.more_details.name} : ${finding.error_report.debugging_info},
-    "message":${finding.error_report.more_details.description},
-    "raw_details": "Test",
-    "start_line":${finding.error_report.debugging_info.break_points[0].location.line},
-    "end_line":${finding.error_report.debugging_info.break_points[0].location.line}}`;
+function getFindingsString(finding: Finding):CheckAnnotation {
+  return {
+    path:"PFAD",
+    annotation_level: "failure",
+    title: "TITLE",
+    message:"MESS",
+    raw_details: "DET",
+    start_line:5,
+    end_line:5};
+  /*{path:finding.error_report.debugging_info.executable_path
+      annotation_level: "failure",
+    title: finding.error_report.more_details.name,
+    message:finding.error_report.more_details.description,
+    raw_details: "Test",
+    start_line:finding.error_report.debugging_info.break_points[0].location.line,
+    end_line:finding.error_report.debugging_info.break_points[0].location.line}*/
 }
 
-function getFindingsStringArray(findings: Findings):string[] {
-  let findingsArray:string[] = []
+function getFindingsStringArray(findings: Findings):CheckAnnotation[] {
+  let findingsArray:CheckAnnotation[] = []
   findings.findings.forEach(finding=> {
       findingsArray.push(getFindingsString(finding))
   })
@@ -35,7 +44,8 @@ const unpackInputs = (title: string, inputs: Args, findings: Findings): Record<s
       summary: findings.findings.length+" Findings found",
       text: inputs.output.text_description,
       actions: inputs.actions,
-      annotations: getFindingsStringArray(findings),
+      annotations:
+          getFindingsStringArray(findings),
           /*[
           {"path":"webgoat-container/src/main/java/org/owasp/webgoat/controller/StartLesson.java",
             "annotation_level":"warning",
@@ -57,8 +67,8 @@ const unpackInputs = (title: string, inputs: Args, findings: Findings): Record<s
               "about the exception can be found in the log below.",
           "start_line":31,
           "end_line":31}
-      ],
-          */
+      ],*/
+
       images: inputs.images,
     };
   }
