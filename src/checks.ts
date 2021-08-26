@@ -34,7 +34,7 @@ const unpackInputs = (title: string, inputs: Args, findings: Findings): Record<s
             text: "",
             annotations: getFindingsStringArray(findings),
         },
-        conclusion: findings.findings.length==0?"success":"failure",
+        conclusion: findings.findings.length == 0 ? "success" : "failure",
         completed_at: formatDate(),
     };
 };
