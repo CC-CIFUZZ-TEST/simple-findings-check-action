@@ -16,9 +16,9 @@ function getFindingsString(finding: Finding):CheckAnnotation {
     annotation_level: "failure",
     title: finding.error_report.more_details.name,
     message:finding.error_report.more_details.description,
-    raw_details: "Test",
-    start_line:5,
-    end_line:5};
+    raw_details: finding.error_report.input_data? finding.error_report.input_data:"",
+    start_line:finding.error_report.debugging_info.break_points[0].location.line,
+    end_line:finding.error_report.debugging_info.break_points[0].location.line};
 }
 
 function getFindingsStringArray(findings: Findings):CheckAnnotation[] {
