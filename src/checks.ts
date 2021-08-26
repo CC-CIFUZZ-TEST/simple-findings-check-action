@@ -34,8 +34,9 @@ const unpackInputs = (title: string, inputs: Args, findings: Findings): Record<s
             text: "",
             annotations: getFindingsStringArray(findings),
         },
-        conclusion: "success",
+        conclusion: "failure",
         completed_at: formatDate(),
+        details_url:"",
     };
 };
 
