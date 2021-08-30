@@ -7,6 +7,12 @@ inputs:
   github-token:
     description: 'Github Access Token'
     required: true
+  serverUrl:
+    description: 'Server Url for fuzz testing'
+    required: true
+  projectId:
+    description: 'Id of the project'
+    required: true
   repo:
     description: 'repository'
     required: true
