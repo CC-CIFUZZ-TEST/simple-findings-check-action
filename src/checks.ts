@@ -25,8 +25,12 @@ export async function createRun(octokit: InstanceType<typeof GitHub>,
     return data.id;
 }
 
-function getSummary(findings: Findings) {
+function getSummary(findings: Findings, testCollectionRun: string) {
     let okMsg = "No findings were found!"
+
+    if(testCollectionRun === undefined || testCollectionRun.length == 0){
+        return "Previous steps failed."
+    }
 
     if (findings !== undefined && findings.findings !== undefined) {
 
@@ -47,8 +51,7 @@ function unpackInputs(title: string, inputs: Args, findings: Findings): Record<s
     return {
         output: {
             title,
-            summary: getSummary(findings),
-            // text: inputs.testCollectionRun,
+            summary: getSummary(findings,inputs.testCollectionRun),
             annotations: annotations,
         },
         conclusion: annotations.length == 0 ? "success" : "failure",
