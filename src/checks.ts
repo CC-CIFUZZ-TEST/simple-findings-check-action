@@ -13,24 +13,41 @@ export async function createRun(octokit: InstanceType<typeof GitHub>,
                                 sha: string,
                                 ownership: Ownership,
                                 inputs: Args,
-                                findings: Findings, text: string): Promise<number> {
+                                findings: Findings): Promise<number> {
 
     const {data} = await octokit.checks.create({
         ...ownership,
         head_sha: sha,
         name: name,
         started_at: formatDate(),
-        ...unpackInputs(name, inputs, findings, text),
+        ...unpackInputs(name, inputs, findings),
     });
     return data.id;
 }
 
-function unpackInputs(title: string, inputs: Args, findings: Findings, text: string): Record<string, unknown> {
+function getSummary(findings: Findings) {
+    let okMsg = "No findings were found!"
+
+    if (findings !== undefined && findings.findings !== undefined) {
+
+        let countFindings = findings.findings.length
+        if(countFindings == 0) {
+            return okMsg
+        }
+
+        return countFindings+" findings found!"
+
+    } else {
+        return okMsg
+    }
+}
+
+function unpackInputs(title: string, inputs: Args, findings: Findings): Record<string, unknown> {
     let annotations = getFindingsStringArray(findings)
     return {
         output: {
             title,
-            summary: text,
+            summary: getSummary(findings),
             text: inputs.testCollectionRun,
             annotations: annotations,
         },

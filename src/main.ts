@@ -4,7 +4,7 @@ import * as github from '@actions/github';
 import * as GitHub from './namespaces/GitHub';
 import {createRun} from './checks';
 import fetch from 'node-fetch'
-import {Findings} from './namespaces/findings';
+import {Finding, Findings} from './namespaces/findings';
 import * as Inputs from "./namespaces/Inputs";
 
 // prettier-ignore
@@ -55,7 +55,8 @@ async function run(): Promise<void> {
         const text = await response.text();
         let findings: Findings = JSON.parse(text);
         core.debug(`Creating a new Run on ${ownership.owner}/${ownership.repo}@${sha}`);
-        const id = await createRun(octokit, inputs.name, sha, ownership, inputs, findings, text);
+        let findingsFiltered: Findings = { findings : getFilteredFindings(findings.findings, inputs.testCollectionRun)}
+        const id = await createRun(octokit, inputs.name, sha, ownership, inputs, findingsFiltered);
         core.setOutput('check_id', id);
         core.debug(`Done`);
     } catch (e) {
@@ -65,6 +66,21 @@ async function run(): Promise<void> {
     }
 }
 
+function getFilteredFindings(findings: Finding[], testCollectionRun: string) {
+    if(findings === undefined) {
+        return []
+    }
+
+    let filteredFindings:Finding[] = [];
+    findings.forEach(finding => {
+            if(finding.campaign_run === testCollectionRun) {
+                filteredFindings.push(finding)
+            }
+        }
+    )
+
+    return filteredFindings
+}
 
 type GetInput = (name: string, options?: InputOptions | undefined) => string;
 
