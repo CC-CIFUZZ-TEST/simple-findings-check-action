@@ -48,7 +48,7 @@ function unpackInputs(title: string, inputs: Args, findings: Findings): Record<s
         output: {
             title,
             summary: getSummary(findings),
-            text: inputs.testCollectionRun,
+            // text: inputs.testCollectionRun,
             annotations: annotations,
         },
         conclusion: annotations.length == 0 ? "success" : "failure",
