@@ -9,31 +9,31 @@ type Ownership = {
 };
 
 export async function createRun(octokit: InstanceType<typeof GitHub>,
-                         name: string,
-                         sha: string,
-                         ownership: Ownership,
-                         inputs: Args,
-                         findings: Findings): Promise<number> {
+                                name: string,
+                                sha: string,
+                                ownership: Ownership,
+                                inputs: Args,
+                                findings: Findings, text: string): Promise<number> {
 
     const {data} = await octokit.checks.create({
         ...ownership,
         head_sha: sha,
         name: name,
         started_at: formatDate(),
-        ...unpackInputs(name, inputs, findings),
+        ...unpackInputs(name, inputs, findings, text),
     });
     return data.id;
 }
 
-function unpackInputs(title: string, inputs: Args, findings: Findings): Record<string, unknown> {
+function unpackInputs(title: string, inputs: Args, findings: Findings, text: string): Record<string, unknown> {
     return {
         output: {
             title,
-            summary: findings.findings.length + " Findings found",
+            summary: text,
             text: inputs.testCollectionRun,
             annotations: getFindingsStringArray(findings),
         },
-        conclusion: findings.findings.length == 0 ? "success" : "failure",
+        conclusion: "success",
         completed_at: formatDate(),
     };
 }
@@ -44,9 +44,11 @@ function formatDate(): string {
 
 function getFindingsStringArray(findings: Findings): CheckAnnotation[] {
     let findingsArray: CheckAnnotation[] = []
-    findings.findings.forEach(finding => {
-        findingsArray.push(getFindingsString(finding))
-    })
+    if (findings !== undefined && findings.findings !== undefined ){
+        findings.findings.forEach(finding => {
+            findingsArray.push(getFindingsString(finding))
+        })
+    }
     return findingsArray
 }
 
