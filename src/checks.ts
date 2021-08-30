@@ -26,14 +26,15 @@ export async function createRun(octokit: InstanceType<typeof GitHub>,
 }
 
 function unpackInputs(title: string, inputs: Args, findings: Findings, text: string): Record<string, unknown> {
+    let annotations = getFindingsStringArray(findings)
     return {
         output: {
             title,
             summary: text,
             text: inputs.testCollectionRun,
-            annotations: getFindingsStringArray(findings),
+            annotations: annotations,
         },
-        conclusion: "success",
+        conclusion: annotations.length == 0 ? "success" : "failure",
         completed_at: formatDate(),
     };
 }
