@@ -45,7 +45,7 @@ async function run(): Promise<void> {
             ownership.repo = repo[1];
         }
 
-        const response = await fetch('https://external.code-intelligence.com/v1/projects/organizations_b30cbf9fc564b330_lighttpd-223f0fe0/findings', {
+        const response = await fetch(inputs.serverUrl+'/v1/'+inputs.projectId+'/findings', {
             method: 'get',
             headers: {
                 'Authorization': 'Bearer ' + inputs.ciFuzzToken
@@ -73,6 +73,8 @@ type GetInput = (name: string, options?: InputOptions | undefined) => string;
 function parseInputs(getInput: GetInput): Inputs.Args {
     const repo = getInput('repo');
     const token = getInput('github-token', {required: true});
+    const serverUrl = getInput('serverUrl', {required: true});
+    const projectId = getInput('projectId', {required: true});
     const ciFuzzToken = getInput('ci-fuzz-api-token', {required: true});
     const testCollectionRun = getInput('test_collection_run', {required: false});
 
@@ -86,6 +88,8 @@ function parseInputs(getInput: GetInput): Inputs.Args {
     return {
         repo,
         name,
+        serverUrl,
+        projectId,
         token,
         ciFuzzToken,
         testCollectionRun
