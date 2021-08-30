@@ -75,7 +75,8 @@ function getFindingsStringArray(findings: Findings): CheckAnnotation[] {
 
 function getFindingsString(finding: Finding): CheckAnnotation {
     return {
-        path: finding.error_report.debugging_info.executable_path,
+        path: finding.error_report.debugging_info.break_points[0].source_file_path,
+        blob_href: finding.error_report.debugging_info.break_points[0].source_file_path,
         annotation_level: "failure",
         title: finding.error_report.more_details.name,
         message: finding.error_report.more_details.description,

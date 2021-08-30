@@ -1,5 +1,6 @@
 export interface CheckAnnotation {
     path: string,
+    blob_href: string,
     annotation_level: string,
     title: string,
     message: string,
