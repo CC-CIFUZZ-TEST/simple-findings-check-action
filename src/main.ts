@@ -52,11 +52,11 @@ async function run(): Promise<void> {
             }
         })
 
-        const text = await response.text();
+        const text = await response.text()
         let findings: Findings = JSON.parse(text)
-
-        core.debug(`Creating a new Run on ${ownership.owner}/${ownership.repo}@${sha}`);
-        const id = await createRun(octokit, inputs.name, sha, ownership, inputs, findings);
+        core.error(text)
+        core.debug(`Creating a new Run on ${ownership.owner}/${ownership.repo}@${sha}`)
+        const id = await createRun(octokit, inputs.name, sha, ownership, inputs, findings)
         core.setOutput('check_id', id);
 
         core.debug(`Done`);
